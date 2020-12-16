@@ -48,7 +48,7 @@
       this.listMessages.Name = "listMessages";
       this.listMessages.Size = new System.Drawing.Size(583, 277);
       this.listMessages.TabIndex = 0;
-      this.listMessages.SelectedIndexChanged += new System.EventHandler(this.ListMessages_SelectedIndexChanged);
+      this.listMessages.SelectedIndexChanged += new System.EventHandler(this.listMessages_SelectedIndexChanged);
       // 
       // label1
       // 
@@ -81,7 +81,7 @@
       this.fieldUsername.Size = new System.Drawing.Size(267, 20);
       this.fieldUsername.TabIndex = 3;
       this.fieldUsername.Text = "You are not logged in";
-      this.fieldUsername.TextChanged += new System.EventHandler(this.FieldUsername_TextChanged);
+      this.fieldUsername.TextChanged += new System.EventHandler(this.fieldUsername_TextChanged);
       // 
       // fieldMessage
       // 
@@ -91,7 +91,7 @@
       this.fieldMessage.Name = "fieldMessage";
       this.fieldMessage.Size = new System.Drawing.Size(391, 34);
       this.fieldMessage.TabIndex = 4;
-      this.fieldMessage.TextChanged += new System.EventHandler(this.FieldMessage_TextChanged);
+      this.fieldMessage.TextChanged += new System.EventHandler(this.fieldMessage_TextChanged);
       // 
       // btnSend
       // 
@@ -102,12 +102,12 @@
       this.btnSend.TabIndex = 5;
       this.btnSend.Text = "SEND";
       this.btnSend.UseVisualStyleBackColor = true;
-      this.btnSend.Click += new System.EventHandler(this.BtnSend_Click);
+      this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
       // 
       // updateLoop
       // 
       this.updateLoop.Interval = 1000;
-      this.updateLoop.Tick += new System.EventHandler(this.UpdateLoop_Tick);
+      this.updateLoop.Tick += new System.EventHandler(this.updateLoop_Tick);
       // 
       // btnAuth
       // 
@@ -118,7 +118,7 @@
       this.btnAuth.TabIndex = 6;
       this.btnAuth.Text = "Authentification";
       this.btnAuth.UseVisualStyleBackColor = true;
-      this.btnAuth.Click += new System.EventHandler(this.BtnAuth_Click);
+      this.btnAuth.Click += new System.EventHandler(this.btnAuth_Click);
       // 
       // btnReg
       // 
@@ -129,7 +129,7 @@
       this.btnReg.TabIndex = 7;
       this.btnReg.Text = "Registartion";
       this.btnReg.UseVisualStyleBackColor = true;
-      this.btnReg.Click += new System.EventHandler(this.BtnReg_Click);
+      this.btnReg.Click += new System.EventHandler(this.btnReg_Click);
       // 
       // MainForm
       // 
