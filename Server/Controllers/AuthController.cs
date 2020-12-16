@@ -30,8 +30,6 @@ namespace Server.Controllers
 			{
         Program.onlineUsers[auth_data.login]++;
 
-        Program.ms.Add(new message("Server", $"{Program.onlineUsers[auth_data.login]}"));
-
         if (Program.onlineUsers[auth_data.login] == 1)
         {
           Program.ms.Add(new message("Server", $"{auth_data.login} is now online"));
