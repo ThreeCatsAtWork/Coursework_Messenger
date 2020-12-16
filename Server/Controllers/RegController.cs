@@ -21,7 +21,7 @@ namespace Server.Controllers
       if (int_token != -1)
 			{
         Console.WriteLine(int_token);
-        Program.onlineUsers.Add(auth_data.Login, 1);
+        Program.onlineUsers.Add(auth_data.login, 1);
         Program.ms.Add(new message("Server", $"{auth_data.login} is just registered. Welcome!!!"));       
       }      
       return int_token;

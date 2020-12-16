@@ -43,7 +43,7 @@ namespace Server.Controllers
     public void Post([FromBody] message msg)
     {
       Program.ms.Add(msg);
-      Console.WriteLine($"{msg.username}:  {msg.Text} ({Program.ms.messages.Count})");             
+      Console.WriteLine($"{msg.username}:  {msg.text} ({Program.ms.messages.Count})");             
     }
 
     // DELETE api/<ChatController>
