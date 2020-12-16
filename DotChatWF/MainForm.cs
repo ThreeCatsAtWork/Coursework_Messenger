@@ -12,26 +12,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace DotChatWF
 {
-
   public partial class MainForm : Form
   {
+
+    // Глобальные переменные     
     public List<x_y> x_y = new List<x_y>();
-    // Глобальные переменные        
     AuthentificationForm AuthForm;
     RegistartionForm RegForm;
     public TextBox TextBox_username;
-    public int int_token;       
+    public int int_token;
 
     public MainForm()
     {
       InitializeComponent();
     }
 
-    private void UpdateLoop_Tick(object sender, EventArgs e)
+    private void updateLoop_Tick(object sender, EventArgs e)
     {      
-      List<Message> allMSG = GetAllMessages();                        
+      List<Message> allMSG = GetAllMessages();            
       if (allMSG.Count > listMessages.Items.Count)
       {
         int index = -1;
@@ -51,36 +52,56 @@ namespace DotChatWF
           ++index;
           listMessages.Items.Add($"{m.timestamp}  [{m.username}] {m.text}\tID: {index + 1}");
         }
-      }
+      }            
     }
 
-    private void BtnSend_Click(object sender, EventArgs e)
+    private void btnSend_Click(object sender, EventArgs e)
     {
       if (int_token == 0)
       {
-        MessageBox.Show("Please log in or register");
+          MessageBox.Show("Please log in or register");
       }
       else
       {
-        if(fieldUsername.Text == "admin")
+        if (fieldMessage.Text == String.Empty)
         {
-          if (fieldMessage.Text.IndexOf("/delete ") != -1 && fieldMessage.Text[0] == '/') // Если сообщения вида /delete ID, то удаляем сообщение с индексом ID
+            MessageBox.Show("Empty message field");
+        }
+        else
+        {
+          if (fieldUsername.Text == "admin")
           {
-            string[] request = fieldMessage.Text.Split(' ');
-            if (request.Length == 2)
+
+            if (fieldMessage.Text.IndexOf("/delete ") != -1 && fieldMessage.Text[0] == '/') // Если сообщения вида /delete ID, то удаляем сообщение с индексом ID
             {
-              var deleteRequest = (HttpWebRequest)WebRequest.Create("http://localhost:5000/api/Chat/" + $"{Convert.ToInt32(request[1])}"); // Реквест на api/Chat + ID
-              deleteRequest.Method = "DELETE";
-              deleteRequest.GetResponse();
-              fieldMessage.Text = String.Empty;
+              string[] request = fieldMessage.Text.Split(' ');
+              if (request.Length == 2)
+              {
+                var deleteRequest =
+                    (HttpWebRequest) WebRequest.Create("http://localhost:5000/api/Chat/" +
+                                                          $"{Convert.ToInt32(request[1])}"); // Реквест на api/Chat + ID
+                deleteRequest.Method = "DELETE";
+                deleteRequest.GetResponse();
+                fieldMessage.Text = String.Empty;
+              }
+              else // Если в окошке есть что-то помимо команды и ID
+              {
+                MessageBox.Show("Bad request");
+                fieldMessage.Text = String.Empty;
+              }
+
             }
-            else // Если в окошке есть что-то помимо команды и ID
+            else // Если это обычное сообщение
             {
-              MessageBox.Show("Bad request");
+              SendMessage(new Message()
+              {
+                username = fieldUsername.Text,
+                text = fieldMessage.Text,
+              });
               fieldMessage.Text = String.Empty;
             }
           }
-          else // Если это обычное сообщение
+          else
           {
             SendMessage(new Message()
             {
@@ -89,15 +110,7 @@ namespace DotChatWF
             });
             fieldMessage.Text = String.Empty;
           }
-        }
-        else // Если это обычное сообщение
-        {
-          SendMessage(new Message()
-          {
-            username = fieldUsername.Text,
-            text = fieldMessage.Text,
-          });
-          fieldMessage.Text = String.Empty;
+
         }
       }
     }
@@ -125,50 +138,47 @@ namespace DotChatWF
         return JsonConvert.DeserializeObject<List<Message>>(readList.ReadToEnd());
       }
     }
-
-    private void Get_x_y(object sender, EventArgs e)
+    private void btnAuth_Click(object sender, EventArgs e)
     {
-      string json = "";
-      using (StreamReader sr = new StreamReader("config.json", Encoding.Default))
-      {
-        json = sr.ReadToEnd();
-      }
-      var deserializer = new JsonSerializer();
-      x_y = (List<x_y>)deserializer.Deserialize(new StringReader(json), typeof(List<x_y>));
-
-      Size = new Size(x_y[0].x, x_y[0].y);
+      AuthForm = new AuthentificationForm();
+      AuthForm.mForm = this;      
+      AuthForm.Show();
+      this.Visible = false;
     }
 
-    private void BtnAuth_Click(object sender, EventArgs e)
+     private void GetSize(object sender, EventArgs e, string filename = "config.json")
     {
-      AuthForm = new AuthentificationForm
-      {
-        mForm = this
-      };
-      AuthForm.Show();
-      Visible = false;
+        string json = "";
+        using (StreamReader sr = new StreamReader("config.json", System.Text.Encoding.Default))
+        {
+            json = sr.ReadToEnd();
+        }
+        var deserializer = new JsonSerializer();
+        this.x_y = (List<x_y>)deserializer.Deserialize(new StringReader(json), typeof(List<x_y>));
+
+        this.Size = new Size(this.x_y[0].x, this.x_y[0].y);
     }
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-      Get_x_y(sender, e);
       int_token = 0;
+     // this.Size = new Size(680, 450);
+      GetSize(sender, e);
       AuthForm = new AuthentificationForm();
       RegForm = new RegistartionForm();
       TextBox_username = fieldUsername;
+
     }
 
-    private void BtnReg_Click(object sender, EventArgs e)
+    private void btnReg_Click(object sender, EventArgs e)
     {
-      RegForm = new RegistartionForm
-      {
-        mForm = this
-      };
+      RegForm = new RegistartionForm();
+      RegForm.mForm = this;     
       RegForm.Show();
       this.Visible = false;
     }
 
-    private void ListMessages_SelectedIndexChanged(object sender, EventArgs e)
+    private void listMessages_SelectedIndexChanged(object sender, EventArgs e)
     {
 
     }
@@ -181,34 +191,34 @@ namespace DotChatWF
       }
     }
 
-    private void FieldMessage_TextChanged(object sender, EventArgs e)
+    private void fieldMessage_TextChanged(object sender, EventArgs e)
     {
 
     }
 
     // При закрытии формы отправляем то, что юзер вышел
-	  private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-	  {      
+		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+		{      
       GettingOffline(TextBox_username.Text);
-	  }
+		}
 
     // Метод, отправляющий серверу инфу, что мы вышли или разлогинились
     public static void GettingOffline(string _login)
     {
-      if (_login != "You are not logged in")
-		  {
+      if (_login != "You are not logged in") 
+      {
         var deleteRequest = WebRequest.Create("http://localhost:5000/api/Auth/" + $"{_login}");
         deleteRequest.Method = "DELETE";
         deleteRequest.GetResponse();
       }      
     }
 
-	  private void FieldUsername_TextChanged(object sender, EventArgs e)
-	  {
+		private void fieldUsername_TextChanged(object sender, EventArgs e)
+		{
 
-	  }
+		}
 
-    private void listContacts_SelectedIndexChanged(object sender, EventArgs e)
+    private void label2_Click(object sender, EventArgs e)
     {
 
     }
@@ -223,21 +233,19 @@ namespace DotChatWF
       x = 0;
       y = 0;
     }
+
     public x_y(int x, int y)
     {
       this.y = x;
       this.x = y;
     }
   }
+
   [Serializable]
   public class Message
   {
     public string username = "";
     public string text = "";
     public string timestamp;
-  }
-  public class Contacts
-  {
-    public string username = "";
-  }
+  } 
 }
