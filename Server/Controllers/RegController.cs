@@ -16,13 +16,13 @@ namespace Server.Controllers
     [HttpPost]
     public int Post([FromBody] AuthData auth_data)
     {
-      int int_token = Program.Sessions.Registration(auth_data);
+      int int_token = Program.Sessions.registration(auth_data);
 
       if (int_token != -1)
 			{
         Console.WriteLine(int_token);
         Program.onlineUsers.Add(auth_data.Login, 1);
-        Program.ms.Add(new Message("Server", $"{auth_data.Login} is just registered. Welcome!!!"));       
+        Program.ms.Add(new message("Server", $"{auth_data.login} is just registered. Welcome!!!"));       
       }      
       return int_token;
     }

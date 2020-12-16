@@ -12,19 +12,20 @@ namespace Server
   {
     public string username { get; set; }
     public string text { get; set; }
-    public DateTime timestamp { get; set; }
+    public string timestamp { get; set; }
+
     public message()
     {
       this.username = "Server";
       this.text = "Server is running...";
-      this.timestamp = DateTime.Now;
+      this.timestamp = DateTime.Now.ToString("dd MMM H:mm");
     }
 
     public message(string username, string text)
     {
       this.username = username;
       this.text = text;
-      this.timestamp = DateTime.Now;
+      this.timestamp = DateTime.Now.ToString("dd MMM H:mm");
     }
   }
 
@@ -42,7 +43,7 @@ namespace Server
 
     public void Add(message ms)
     {
-      ms.timestamp = DateTime.Now;
+      ms.timestamp = DateTime.Now.ToString("dd MMM H:mm");
       messages.Add(ms);
       Console.WriteLine(messages.Count);
     }

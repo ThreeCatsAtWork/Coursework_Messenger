@@ -18,23 +18,23 @@ namespace Server.Controllers
     public int Post([FromBody] AuthData auth_data)
     {
       // Спрашиваем ip из посланной информации
-      if (auth_data.Ip != String.Empty) 
+      if (auth_data.ip != String.Empty) 
 			{
-        Program.ip = "http://" + auth_data.Ip;
+        Program.ip = "http://" + auth_data.ip;
 			}
 
-      int int_token = Program.Sessions.Login(auth_data);
+      int int_token = Program.Sessions.login(auth_data);
 
       // Если аутентификация удачна, то прибавляем значение в словаре онлайна
       if (int_token != -1 && int_token != -2)
 			{
         Program.onlineUsers[auth_data.Login]++;
 
-        Program.ms.Add(new Message("Server", $"{Program.onlineUsers[auth_data.Login]}"));
+        Program.ms.Add(new message("Server", $"{Program.onlineUsers[auth_data.login]}"));
 
         if (Program.onlineUsers[auth_data.Login] == 1)
         {
-          Program.ms.Add(new Message("Server", $"{auth_data.Login} is now online"));
+          Program.ms.Add(new message("Server", $"{auth_data.login} is now online"));
         }
       }
 
@@ -54,7 +54,7 @@ namespace Server.Controllers
         // Если это был последний залогиненный юзер
         if (Program.onlineUsers[_login] == 0)
 				{
-          Program.ms.Add(new Message("Server", $"{_login} is now offline"));
+          Program.ms.Add(new message("Server", $"{_login} is now offline"));
 				}
       }
 		}    
