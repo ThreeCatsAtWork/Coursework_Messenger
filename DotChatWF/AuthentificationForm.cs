@@ -28,7 +28,7 @@ namespace DotChatWF
         var authRequest = (HttpWebRequest)WebRequest.Create("http://localhost:5000/api/Auth");
         authRequest.Method = "POST";
         authRequest.ContentType = "application/json";
-        RegistartionForm.AuthData userData = new RegistartionForm.AuthData(); // Сериализуем данные с помощью класса AuthData
+        RegistrationForm.AuthData userData = new RegistrationForm.AuthData(); // Сериализуем данные с помощью класса AuthData
         userData.login = loginBox.Text;
         userData.password = passBox.Text;
         userData.ip = ipBoxBox.Text;

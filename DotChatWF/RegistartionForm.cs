@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace DotChatWF
 {
-  public partial class RegistartionForm : Form
+  public partial class RegistrationForm : Form
   {
     public class AuthData
     {
@@ -27,7 +27,7 @@ namespace DotChatWF
     }
 
     public MainForm mForm; 
-    public RegistartionForm()
+    public RegistrationForm()
     {
       InitializeComponent();
     }

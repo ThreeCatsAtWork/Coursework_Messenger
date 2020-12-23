@@ -21,7 +21,7 @@ namespace DotChatWF
     // Глобальные переменные     
     public List<x_y> x_y = new List<x_y>();
     AuthentificationForm AuthForm;
-    RegistartionForm RegForm;
+    RegistrationForm RegForm;
     public TextBox TextBox_username;
     public int int_token;
 
@@ -165,14 +165,14 @@ namespace DotChatWF
      // this.Size = new Size(680, 450);
       GetSize(sender, e);
       AuthForm = new AuthentificationForm();
-      RegForm = new RegistartionForm();
+      RegForm = new RegistrationForm();
       TextBox_username = fieldUsername;
 
     }
 
     private void btnReg_Click(object sender, EventArgs e)
     {
-      RegForm = new RegistartionForm();
+      RegForm = new RegistrationForm();
       RegForm.mForm = this;     
       RegForm.Show();
       this.Visible = false;

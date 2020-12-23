@@ -127,7 +127,7 @@
       this.btnReg.Name = "btnReg";
       this.btnReg.Size = new System.Drawing.Size(106, 23);
       this.btnReg.TabIndex = 7;
-      this.btnReg.Text = "Registartion";
+      this.btnReg.Text = "Registration";
       this.btnReg.UseVisualStyleBackColor = true;
       this.btnReg.Click += new System.EventHandler(this.btnReg_Click);
       // 
